@@ -21,12 +21,11 @@ void printString(string message) {
 	ip.type = INPUT_KEYBOARD;
 	ip.ki.time = 0;
 	ip.ki.dwExtraInfo = 0;
-	ip.ki.wScan = 0;
+	ip.ki.wVk = 0;
 
 	for (int i = 0; i < message.size(); i++) {
-		WORD key = VkKeyScanEx(message[i], currentKBL);
-		ip.ki.dwFlags = 0;
-		ip.ki.wVk = key;
+		ip.ki.wScan = message[i];
+		ip.ki.dwFlags = KEYEVENTF_UNICODE;
 		SendInput(1, &ip, sizeof(INPUT));
 		ip.ki.dwFlags = KEYEVENTF_KEYUP;
 		SendInput(1, &ip, sizeof(INPUT));
